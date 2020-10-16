@@ -1,0 +1,45 @@
+<div>
+  <h1>Please enter your travel request details below</h1>
+   <form  #form="ngForm" (ngSubmit)="onSubmit(form)">
+
+    <div class="form-group col-md-4 mb-3">
+      <label>Origin Airport</label>
+      <input type="text" class="form-control" name="origin" [(ngModel)]="request.fromAirport">
+    </div>
+
+    <div class="form-group col-md-4 mb-3">
+      <label>Destination Airport</label>
+      <input type="text" class="form-control" name="destination" [(ngModel)]="request.toAirport">
+    </div>
+
+    <div class="form-group col-md-4 mb-3">
+      <label>Flight date</label>
+      <div class="form-inline input-group">
+        <input class="form-control" style="width: 50%;" placeholder="yyyy-mm-dd" name="date" [(ngModel)]="request.date" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-4 mb-3">
+      <label>Number of passengers</label>
+      <select class="form-control" style="width: 50%;" name="numPassengers" [(ngModel)]="request.numPassengers">
+        <option value=""># of passengers</option>
+        <option *ngFor="let num of validPassengerCounts; let i = index">{{num}}</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-3 mb-3">
+      <button class="btn btn-primary btn-block">Submit</button>
+    </div>
+   </form>
+
+   <div *ngIf="showEstimate">
+      <label>The estimated total for your flight from <span><b>{{request.fromAirport}}</b></span> to
+        <span><b>{{request.toAirport}}</b></span> for
+        <span><b>{{request.numPassengers}}</b></span> passengers
+        is estimated to cost <span><b>${{estimatedCost}}</b></span>
+      </label>
+   </div>
+</div>
